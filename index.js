@@ -104,6 +104,17 @@ class MyRoom extends Room {
             this.broadcast("redGoal", this.scoreRed);
 
         });
+        this.onMessage("BUTR", (client, data) => {
+            this.broadcast("BUTBroadcastR");
+        })
+        this.onMessage("BUTB", (client, data) => {
+
+            this.broadcast("BUTBroadcastB");
+        })
+        this.onMessage("RESPAWN", (client, data) => {
+
+            this.broadcast("respawnServer");
+        })
         this.onMessage("elimination", (client, data) => {
             const player = this.state.players.get(client.sessionId);
 
