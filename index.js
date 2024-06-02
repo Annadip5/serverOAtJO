@@ -184,10 +184,7 @@ class MyRoom extends Room {
 
     }
     onUpdate() { }
-    onAuth(client, options, request) {
-        client.send({ type: "cors-allowed", payload: true });
-        return true;
-    }
+
 
 
     onLeave(client) {
@@ -253,5 +250,6 @@ const gameServer = new Server({ server });
 gameServer.define('race_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de course
 gameServer.define('combat_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de combat
 gameServer.define('football_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de football
-gameServer.listen(port);
-console.log("Server started on port 2567");
+server.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+}); 
