@@ -1,5 +1,7 @@
 const { Server, Room } = require('colyseus');
 const { MyRoomState, Player } = require('./schema/myRoomState.ts')
+import { matchMaker } from "@colyseus/core";
+
 //import { State, Player } from './schema/myRoomState';
 
 class MyRoom extends Room {
@@ -239,7 +241,13 @@ class MyRoom extends Room {
         }
     }
 }
-
+matchMaker.controller.getCorsHeaders = function (req) {
+    return {
+        'Access-Control-Allow-Origin': '*',
+        'Vary': '*',
+        // 'Vary': "<header-name>, <header-name>, ...",
+    }
+}
 const server = new Server();
 server.define('race_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de course
 server.define('combat_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de combat
