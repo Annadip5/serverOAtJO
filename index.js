@@ -179,6 +179,10 @@ class MyRoom extends Room {
 
     }
     onUpdate() { }
+    onAuth(client, options, request) {
+        client.send({ type: "cors-allowed", payload: true });
+        return true;
+    }
 
 
     onLeave(client) {
