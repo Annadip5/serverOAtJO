@@ -1,5 +1,8 @@
-const { Server, Room, matchMaker } = require('colyseus');
+const { Server, Room } = require('colyseus');
 const { MyRoomState, Player } = require('./schema/myRoomState.ts')
+const cors = require('cors');
+const express = require('express');
+const http = require('http');
 
 //import { State, Player } from './schema/myRoomState';
 
@@ -240,16 +243,14 @@ class MyRoom extends Room {
         }
     }
 }
-matchMaker.controller.getCorsHeaders = function (req) {
-    return {
-        'Access-Control-Allow-Origin': '*',
-        'Vary': '*',
-        // 'Vary': "<header-name>, <header-name>, ...",
-    }
-}
-const server = new Server();
-server.define('race_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de course
-server.define('combat_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de combat
-server.define('football_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de football
-server.listen(2567);
+
+const app = express();
+app.use(cors()); // Enable CORS for all routes
+
+const server = http.createServer(app);
+const gameServer = new Server({ server });
+gameServer.define('race_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de course
+gameServer.define('combat_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de combat
+gameServer.define('football_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de football
+gameServer.listen(2567);
 console.log("Server started on port 2567");
