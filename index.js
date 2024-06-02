@@ -1,6 +1,5 @@
-const { Server, Room } = require('colyseus');
+const { Server, Room, matchMaker } = require('colyseus');
 const { MyRoomState, Player } = require('./schema/myRoomState.ts')
-import { matchMaker } from "@colyseus/core";
 
 //import { State, Player } from './schema/myRoomState';
 
