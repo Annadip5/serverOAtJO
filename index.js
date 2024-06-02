@@ -5,6 +5,7 @@ const express = require('express');
 const http = require('http');
 
 //import { State, Player } from './schema/myRoomState';
+const port = process.env.PORT || 2567;
 
 class MyRoom extends Room {
     constructor() {
@@ -252,5 +253,5 @@ const gameServer = new Server({ server });
 gameServer.define('race_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de course
 gameServer.define('combat_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de combat
 gameServer.define('football_room', MyRoom).enableRealtimeListing(); // Salle pour le jeu de football
-gameServer.listen(2567);
+gameServer.listen(port);
 console.log("Server started on port 2567");
